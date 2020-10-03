@@ -26,6 +26,14 @@ func Listen(network, address string) (net.Listener, error) {
 	return &proxyListener{l}, nil
 }
 
+func ListenTCP(network string, laddr *net.TCPAddr) (net.Listener, error) {
+	l, err := net.ListenTCP(network, laddr)
+	if err != nil {
+		return nil, err
+	}
+	return &proxyListener{l}, nil
+}
+
 func (p *proxyListener) Accept() (net.Conn, error) {
 	conn, err := p.l.Accept()
 	if err != nil {
